@@ -1,7 +1,4 @@
 <template>
-  <el-row class="tac">
-    <el-col :span="12">
-      <h5 class="mb-2">Default colors</h5>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
@@ -38,8 +35,7 @@
           <span>Navigator Four</span>
         </el-menu-item>
       </el-menu>
-    </el-col>
-    <el-col :span="12">
+    <!-- <el-col :span="12">
       <h5 class="mb-2">Custom colors</h5>
       <el-menu
         active-text-color="#ffd04b"
@@ -80,8 +76,7 @@
           <span>Navigator Four</span>
         </el-menu-item>
       </el-menu>
-    </el-col>
-  </el-row>
+    </el-col> -->
 </template>
 
 <script lang="ts" setup>

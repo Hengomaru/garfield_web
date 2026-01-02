@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import HeaderMenu from "./components/HeaderMenu.vue"
+  import AsideMenu from "./components/AsideMenu.vue"
 </script>
 
 <template>
@@ -9,16 +10,20 @@
         <HeaderMenu></HeaderMenu>
       </el-header>
       <el-container>
-        <el-aside width="200px">Aside</el-aside>
+        <el-aside>
+          <AsideMenu></AsideMenu>
+        </el-aside>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
-<style scoped>
+<style lang="less" scoped>
+  @border-style: 1px solid rgb(0, 217, 255);
+  
   .el-aside {
-    border: 1px solid rgb(0, 217, 255);
+    border: @border-style;
   }
 
   .el-footer {

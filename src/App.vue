@@ -7,13 +7,15 @@
   <div class="common-layout">
     <el-container>
       <el-header>
-        <HeaderMenu></HeaderMenu>
+        <HeaderMenu />
       </el-header>
-      <el-container>
+      <el-container style="min-height: 90dvh;">
         <el-aside>
-          <AsideMenu></AsideMenu>
+          <AsideMenu />
         </el-aside>
-        <el-main>Main</el-main>
+        <el-main>
+          <RouterView />
+        </el-main>
       </el-container>
     </el-container>
   </div>

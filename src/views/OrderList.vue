@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useCounterStore } from '@/store/orderStore'
+
+const store = useCounterStore()
+
+const { name, doubleCount } = storeToRefs(store)
+
+const { increment, reset } = store
+
 interface User {
     date: string
     name: string
@@ -61,6 +70,16 @@ const tableData: User[] = [
     <div class="example-pagination-block">
         <div class="example-demonstration">When you have more than 7 pages</div>
         <el-pagination layout="prev, pager, next" :total="1000" />
+    </div>
+
+    <div>
+        <h2>计算器</h2>
+        <button @click="increment">
+            {{ name }} - {{ doubleCount }}
+        </button>
+        <button @click="reset">
+            重置
+        </button>
     </div>
 </template>
 

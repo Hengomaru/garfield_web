@@ -1,20 +1,33 @@
 <script setup lang="ts">
   import HeaderMenu from "./components/HeaderMenu.vue"
+  import HeaderLogin from "./components/HeaderLogin.vue"
   import AsideMenu from "./components/AsideMenu.vue"
+  import AsideLogin from "./components/AsideLogin.vue"
+  import Entrance from "./views/Entrance.vue"
+  import Login from "./views/Login.vue";
+  import { ref } from "vue";
+
+  const currentHeader = ref(HeaderLogin)
+  const currentAside = ref(AsideLogin)
+  const currentMain = ref(Login)
 </script>
 
 <template>
   <div class="common-layout">
+    <button @click="currentHeader = HeaderMenu; currentAside = AsideMenu; currentMain = Entrance">Toggle Menu</button>
+    <button @click="currentHeader = HeaderLogin; currentAside = AsideLogin; currentMain = Login">Toggle Login</button>
+
     <el-container>
       <el-header>
-        <HeaderMenu />
+          <component :is="currentHeader" />
       </el-header>
+
       <el-container style="min-height: 90dvh;">
         <el-aside>
-          <AsideMenu />
+          <component :is="currentAside" />
         </el-aside>
         <el-main>
-          <RouterView />
+          <component :is="currentMain" />
         </el-main>
       </el-container>
     </el-container>
@@ -26,6 +39,7 @@
   
   .el-aside {
     border: @border-style;
+    margin: 2px;
   }
 
   .el-footer {

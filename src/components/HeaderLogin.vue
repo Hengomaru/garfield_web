@@ -1,0 +1,13 @@
+<script setup lang="ts">
+
+</script>
+
+<template>
+    <el-menu ellipsis class="el-menu-popper-demo" mode="horizontal">
+            <el-menu-item index="1">Logo</el-menu-item>
+    </el-menu>
+</template>
+
+<style scoped>
+
+</style>

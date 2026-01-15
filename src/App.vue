@@ -3,20 +3,28 @@
   import HeaderLogin from "./components/HeaderLogin.vue"
   import AsideMenu from "./components/AsideMenu.vue"
   import AsideLogin from "./components/AsideLogin.vue"
-  import Entrance from "./views/Entrance.vue"
+  import Home from "./views/Home.vue"
   import Login from "./views/Login.vue";
-  import { ref } from "vue";
+  import { computed } from "vue";
+  import { useLoginStore } from '@/store/loginStore'
+  import { storeToRefs } from 'pinia'
 
-  const currentHeader = ref(HeaderLogin)
-  const currentAside = ref(AsideLogin)
-  const currentMain = ref(Login)
+  const store = useLoginStore()
+  const { isLogin } = storeToRefs(store)
+
+  const currentHeader = computed(() => {
+    return isLogin.value ? HeaderMenu : HeaderLogin
+  })
+  const currentAside = computed(() => {
+    return isLogin.value ? AsideMenu : AsideLogin
+  })
+  const currentMain = computed(() => {
+    return isLogin.value ? Home : Login
+  })
 </script>
 
 <template>
   <div class="common-layout">
-    <button @click="currentHeader = HeaderMenu; currentAside = AsideMenu; currentMain = Entrance">Toggle Menu</button>
-    <button @click="currentHeader = HeaderLogin; currentAside = AsideLogin; currentMain = Login">Toggle Login</button>
-
     <el-container>
       <el-header>
           <component :is="currentHeader" />

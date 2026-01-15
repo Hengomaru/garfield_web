@@ -9,10 +9,10 @@ const axiosService = axios.create({
 })
 
 axiosService.interceptors.request.use(config => {
-    const token = localStorage.getItem('token')
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-    }
+    // const token = localStorage.getItem('token')
+    // if (token) {
+    //     config.headers.Authorization = `Bearer ${token}`
+    // }
     if (config.method === 'get') {
         config.params = {
             ...config.params,
@@ -30,11 +30,11 @@ axiosService.interceptors.request.use(config => {
 axiosService.interceptors.response.use(response => {
     // hideLoading()
     const res = response.data
-    if(res.code === 200){
-        return res.data
+    if(res.code === "200"){
+        return res
     } else {
         // handleBusinessError(res.code, res.message)
-        return Promise.reject(new Error(res.message || 'Error'))
+        return Promise.reject(new Error(res.msg || 'Error'))
     }
 }, error => {
     // hideLoading()

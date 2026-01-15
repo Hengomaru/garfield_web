@@ -1,9 +1,11 @@
 <script setup lang="ts">
-
+  import { useLoginStore } from '@/store/loginStore'
+  const store = useLoginStore()
+  const { username } = store
 </script>
 
 <template>
-  <h1>Welcome</h1>
+  <h1>Welcome, {{ username }}</h1>
 </template>
 
 <style lang="less" scoped>

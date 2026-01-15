@@ -3,23 +3,25 @@
   import HeaderLogin from "./components/HeaderLogin.vue"
   import AsideMenu from "./components/AsideMenu.vue"
   import AsideLogin from "./components/AsideLogin.vue"
-  import Home from "./views/Home.vue"
-  import Login from "./views/Login.vue";
   import { computed } from "vue";
   import { useLoginStore } from '@/store/loginStore'
   import { storeToRefs } from 'pinia'
+  import router from "@/router/router"
 
   const store = useLoginStore()
   const { isLogin } = storeToRefs(store)
+  
+  if(!isLogin.value){
+    router.push("/login")
+  }else{
+    router.push("/home")
+  }
 
   const currentHeader = computed(() => {
     return isLogin.value ? HeaderMenu : HeaderLogin
   })
   const currentAside = computed(() => {
     return isLogin.value ? AsideMenu : AsideLogin
-  })
-  const currentMain = computed(() => {
-    return isLogin.value ? Home : Login
   })
 </script>
 
@@ -35,7 +37,7 @@
           <component :is="currentAside" />
         </el-aside>
         <el-main>
-          <component :is="currentMain" />
+          <router-view />
         </el-main>
       </el-container>
     </el-container>

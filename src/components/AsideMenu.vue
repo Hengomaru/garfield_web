@@ -1,20 +1,3 @@
-<template>
-      <el-menu>  
-        <el-menu-item index="1">
-          <el-icon><icon-menu /></el-icon>
-          <span>Navigator Two</span>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
-      </el-menu>
-</template>
-
 <script lang="ts" setup>
 import {
   Document,
@@ -22,5 +5,33 @@ import {
   Location,
   Setting,
 } from '@element-plus/icons-vue'
+import router from '@/router/router'
+import { computed } from "vue";
+import { useMenuStore } from '@/store/menuStore'
+
+const store = useMenuStore()
+const { getCurrentMenu } = store
+
+const source = computed(() => {
+    return getCurrentMenu()
+})
+
+function click(item: any) {
+  console.log(item)
+  router.push(item.path)
+}
 </script>
+
+<template>
+      <el-menu>  
+        <template v-for="{label, path} in source" >
+          <el-menu-item :index="path" @click="click({label, path})">
+          <el-icon><document /></el-icon>
+          <span>{{ label }}</span>
+        </el-menu-item>
+        </template>
+      </el-menu>
+</template>
+
+
 

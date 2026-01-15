@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>User</h1>
+  <h1>User2</h1>
 </template>
 
 <style lang="less" scoped>

@@ -8,24 +8,24 @@ const axiosService = axios.create({
     }
 })
 
-axiosService.interceptors.request.use(config => {
+// axiosService.interceptors.request.use(config => {
     // const token = localStorage.getItem('token')
     // if (token) {
     //     config.headers.Authorization = `Bearer ${token}`
     // }
-    if (config.method === 'get') {
-        config.params = {
-            ...config.params,
-            t: Date.now()
-        }      
-    }
+    // if (config.method === 'get') {
+    //     config.params = {
+    //         ...config.params,
+    //         t: Date.now()
+    //     }      
+    // }
     // if(config.showLoading != false){
     //     showLoading()
     // }
-    return config
-}, error => {
-    return Promise.reject(error)
-})
+//     return config
+// }, error => {
+//     return Promise.reject(error)
+// })
 
 axiosService.interceptors.response.use(response => {
     // hideLoading()

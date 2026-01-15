@@ -10,7 +10,7 @@
 
   const store = useLoginStore()
   const { isLogin } = storeToRefs(store)
-  
+
   if(!isLogin.value){
     router.push("/login")
   }else{

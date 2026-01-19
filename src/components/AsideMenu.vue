@@ -6,7 +6,7 @@ import {
   Setting,
 } from '@element-plus/icons-vue'
 import router from '@/router/router'
-import { computed } from "vue";
+import { computed } from "vue"
 import { useMenuStore } from '@/store/menuStore'
 
 const store = useMenuStore()

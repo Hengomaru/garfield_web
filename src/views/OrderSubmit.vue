@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 // do not use same name with ref
 const form = reactive({
@@ -16,63 +16,92 @@ const form = reactive({
 const onSubmit = () => {
     console.log('submit!')
 }
+
+import type {
+    TransferDirection,
+    TransferKey,
+    renderContent,
+} from 'element-plus'
+
+interface Option {
+    key: number
+    label: string
+    disabled: boolean
+}
+
+const generateData = (): Option[] => {
+    const data: Option[] = []
+    for (let i = 1; i <= 15; i++) {
+        data.push({
+            key: i,
+            label: `Option ${i}`,
+            disabled: i % 4 === 0,
+        })
+    }
+    return data
+}
+
+const data = ref(generateData())
+const rightValue = ref([1])
+const leftValue = ref([1])
+
+const renderFunc: renderContent = (h, option) => h('span', null, option.label)
+
+const handleChange = (
+    value: TransferKey[],
+    direction: TransferDirection,
+    movedKeys: TransferKey[]
+) => {
+    console.log(value, direction, movedKeys)
+}
 </script>
 
 <template>
-    <el-form :model="form" style="max-width: 600px">
-        <el-form-item label="Activity name">
-            <el-input v-model="form.name" />
-        </el-form-item>
-        <el-form-item label="Activity zone">
-            <el-select v-model="form.region" placeholder="please select your zone">
-                <el-option label="Zone one" value="shanghai" />
-                <el-option label="Zone two" value="beijing" />
-            </el-select>
-        </el-form-item>
-        <el-form-item label="Activity time">
-            <el-col :span="11">
-                <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%" />
-            </el-col>
-            <el-col :span="2" class="text-center">
-                <span class="text-gray-500">-</span>
-            </el-col>
-            <el-col :span="11">
-                <el-time-picker v-model="form.date2" placeholder="Pick a time" style="width: 100%" />
-            </el-col>
-        </el-form-item>
-        <el-form-item label="Instant delivery">
-            <el-switch v-model="form.delivery" />
-        </el-form-item>
-        <el-form-item label="Activity type">
-            <el-checkbox-group v-model="form.type">
-                <el-checkbox value="Online activities" name="type">
-                    Online activities
-                </el-checkbox>
-                <el-checkbox value="Promotion activities" name="type">
-                    Promotion activities
-                </el-checkbox>
-                <el-checkbox value="Offline activities" name="type">
-                    Offline activities
-                </el-checkbox>
-                <el-checkbox value="Simple brand exposure" name="type">
-                    Simple brand exposure
-                </el-checkbox>
-            </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="Resources">
-            <el-radio-group v-model="form.resource">
-                <el-radio value="Sponsor">Sponsor</el-radio>
-                <el-radio value="Venue">Venue</el-radio>
-            </el-radio-group>
-        </el-form-item>
-        <el-form-item label="Activity form">
-            <el-input v-model="form.desc" type="textarea" />
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit">Create</el-button>
-            <el-button>Cancel</el-button>
-        </el-form-item>
-    </el-form>
+    <div class="container">
+        <el-form :model="form" style="max-width: 100%">
+            <el-form-item label="Client name:">
+                <el-input v-model="form.name" style="max-width: 30%" />
+            </el-form-item>
+            <el-form-item label="Owner name:">
+                <el-input v-model="form.name" style="max-width: 30%" />
+            </el-form-item>
+            <el-form-item label="Owner type:">
+                <el-select v-model="form.region" placeholder="please select owner type" style="max-width: 30%">
+                    <el-option label="Individual" value="individual" />
+                    <el-option label="Group" value="group" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="Expiry time:">
+                <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 12%" />
+                <span class="text-gray-500" style="margin-left: 2%;margin-right: 2%;">--</span>
+                <el-time-picker v-model="form.date2" placeholder="Pick a time" style="width: 12%" />
+            </el-form-item>
+
+            <el-transfer v-model="leftValue" style="text-align: left; display: inline-block" filterable
+                :left-default-checked="[2, 3]" :right-default-checked="[1]" :render-content="renderFunc"
+                :titles="['Source', 'Target']" :button-texts="['To left', 'To right']" :format="{
+                    noChecked: '${total}',
+                    hasChecked: '${checked}/${total}',
+                }" :data="data" @change="handleChange">
+                <template #left-footer>
+                    <el-button class="transfer-footer" size="small">Operation</el-button>
+                </template>
+                <template #right-footer>
+                    <el-button class="transfer-footer" size="small">Operation</el-button>
+                </template>
+            </el-transfer>
+
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">Create</el-button>
+                <el-button>Cancel</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.container {
+    margin-left: 25%;
+    margin-top: 3%;
+}
+</style>

@@ -5,12 +5,15 @@ import { User, Lock, Promotion } from '@element-plus/icons-vue';
 import axiosService from '@/utils/axiosService';
 import { useLoginStore } from '@/store/loginStore'
 import numService from '@/utils/numService';
+import router from "@/router/router"
 
 const store = useLoginStore()
 const { setLogin, setUser } = store
 
 // 页面加载时
 onMounted(() => {
+  setLogin(false);
+  setUser("");
   generateCodeAsync();
 });
 
@@ -78,24 +81,30 @@ const generateCodeAsync = () => {
 const submitForm = (formEl: FormInstance | undefined) => {
   ruleFormRef.value.validate((valid) => {
     if (valid) {
-      console.log('提交成功!');
+      console.log('表单验证成功!');
+
       axiosService.post('/login', {
         username: ruleForm.AccountNo,
         password: ruleForm.AccountPwd,
       }).then((response) => {
-        const token = response["content"];
-        console.log('登录成功:', token);
-        localStorage.setItem('token', token);
-        console.log('localStorage:', localStorage.getItem('token'));
-        setLogin(true);
-        setUser(ruleForm.AccountNo);
+        successCallback(response)
       }).catch((error) => {
         console.error('登录失败:', error);
+        localStorage.removeItem('token')
       });
     } else {
       console.log('表单验证失败');
     }
   });
+};
+
+const successCallback = (response: any) => {
+  const token = response["content"];
+  console.log('登录成功:', token);
+  localStorage.setItem('token', token);
+  setLogin(true);
+  setUser(ruleForm.AccountNo);
+  router.push("/home")
 };
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -119,15 +128,15 @@ const resetForm = (formEl: FormInstance | undefined) => {
       <el-form-item prop="Code">
         <el-input v-model.number="ruleForm.Code" :prefix-icon="Promotion" class="login-content-code"
           placeholder="请输入验证码" />
-        <el-button type="default" class="reset-verification" @click="generateCodeAsync">换一批</el-button>
+        <el-button type="default" class="reset-verification" @click="generateCodeAsync">生成验证码</el-button>
         <table class="verification-table">
           <tbody>
             <tr>
-            <td>{{ randomChar[0] }}</td>
-            <td>{{ randomChar[1] }}</td>
-            <td>{{ randomChar[2] }}</td>
-            <td>{{ randomChar[3] }}</td>
-          </tr>
+              <td>{{ randomChar[0] }}</td>
+              <td>{{ randomChar[1] }}</td>
+              <td>{{ randomChar[2] }}</td>
+              <td>{{ randomChar[3] }}</td>
+            </tr>
           </tbody>
         </table>
       </el-form-item>
@@ -182,32 +191,22 @@ body {
 }
 
 .demo-ruleForm button:hover {
-  background-color: #4c5ac4;
+  background-color: #4f5aae;
   color: white;
 }
 
 .demo-ruleForm .reset-button {
   width: 100%;
   padding: 10px;
-  border: none;
-  border-radius: 5px;
   background-color: #e0dede;
   color: #333;
-  font-size: 16px;
-  cursor: pointer;
 }
 
 .demo-ruleForm .reset-verification {
-  width: 20%;
+  width: 30%;
   padding: 10px;
   margin-right: 2dvw;
   margin-top: 1dvh;
-  border: none;
-  border-radius: 5px;
-  background-color: #e0dede;
-  color: #333;
-  font-size: 16px;
-  cursor: pointer;
 }
 
 .verification-table {

@@ -1,85 +1,96 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useCounterStore } from '@/store/orderStore'
+import { useOrderStore } from '@/store/orderStore'
+import { ref, computed } from 'vue'
+import type { ComponentSize } from 'element-plus'
+import { Order } from '@/interface/Order'
+import router from '@/router/router'
 
-const store = useCounterStore()
+const store = useOrderStore()
 
-const { name, doubleCount } = storeToRefs(store)
-
-const { increment, reset } = store
-
-interface User {
-    date: string
-    name: string
-    address: string
-}
+const { selectedRow, tableData } = storeToRefs(store)
 
 const tableRowClassName = ({
     row,
     rowIndex,
 }: {
-    row: User
+    row: Order
     rowIndex: number
 }) => {
-    if (rowIndex === 1) {
-        return 'warning-row'
-    } else if (rowIndex === 3) {
-        return 'success-row'
-    }
-    return ''
+    row.index = rowIndex
 }
 
-const tableData: User[] = [
-    {
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-02',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-04',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-01',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-]
+const selectRow = (row: Order) => {
+    Object.assign(selectedRow.value, tableData.value[row.index])
+    router.push("/order/details");
+}
+
+const currentPage = ref(1)
+
+const pageSize = ref(10)
+
+const size = ref<ComponentSize>('large')
+
+const background = ref(true)
+
+const disabled = ref(false)
+
+const handleSizeChange = (val: number) => {
+    console.log(`${val} items per page`)
+}
+
+const handleCurrentChange = (val: number) => {
+    console.log(`current page: ${val}`)
+}
+
+const show = () => {
+    console.log('Selected client name:', selectedRow.value.client);
+    console.log('row client name:', tableData.value[selectedRow.value.index].client);
+};
 </script>
 
 <template>
+    <div class="flex items-center mb-4">
+    <el-radio-group v-model="size" class="mr-4">
+      <el-radio-button value="default">default</el-radio-button>
+      <el-radio-button value="large">large</el-radio-button>
+      <el-radio-button value="small">small</el-radio-button>
+    </el-radio-group>
+    <div>
+      Background: <el-switch v-model="background" class="ml-2" />
+    </div>
+    <div class="ml-4">
+      Disabled: <el-switch v-model="disabled" class="ml-2" />
+    </div>
+  </div>
+
+  <hr class="my-4" />
+  <el-button @click="show">client名称</el-button>
+
     <div class="example-pagination-block">
-        <div class="example-demonstration">When you have few pages</div>
-        <el-pagination layout="prev, pager, next" :total="50" />
+        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
+            :page-sizes="[5, 10, 15, 20]" :size="size" :disabled="disabled" :background="background"
+            layout="total, sizes, prev, pager, next, jumper" :total="50" @size-change="handleSizeChange"
+            @current-change="handleCurrentChange" />
     </div>
 
     <div>
-        <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
-            <el-table-column prop="date" label="Date" width="180" />
-            <el-table-column prop="name" label="Name" width="180" />
-            <el-table-column prop="address" label="Address" />
+        <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName" @row-click="selectRow">
+            <el-table-column prop="id" label="ID" width="80" />
+            <el-table-column prop="client" label="Client" width="180" />
+            <el-table-column prop="owner" label="Owner" width="180" />
+            <el-table-column prop="created_date" label="Created Date" width="180" />
+            <el-table-column prop="expired_date" label="Expired Date" width="180" />
+            <el-table-column prop="status" label="Status" width="150" />
+            <el-table-column prop="amount" label="Amount" width="150" />
         </el-table>
     </div>
 
     <div class="example-pagination-block">
-        <div class="example-demonstration">When you have more than 7 pages</div>
-        <el-pagination layout="prev, pager, next" :total="1000" />
-    </div>
-
-    <div>
-        <h2>计算器</h2>
-        <button @click="increment">
-            {{ name }} - {{ doubleCount }}
-        </button>
-        <button @click="reset">
-            重置
-        </button>
+        <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
+            :page-sizes="[5, 10, 15, 20]" :size="size" :disabled="disabled" :background="background"
+            layout="total, sizes, prev, pager, next, jumper" :total="50" @size-change="handleSizeChange"
+            @current-change="handleCurrentChange" />
     </div>
 </template>
 
@@ -90,5 +101,9 @@ const tableData: User[] = [
 
 :deep(.el-table .success-row) {
     --el-table-tr-bg-color: var(--el-color-success-light-9);
+}
+
+.example-pagination-block {
+    margin: 50px;
 }
 </style>

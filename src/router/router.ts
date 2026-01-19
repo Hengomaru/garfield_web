@@ -7,11 +7,13 @@ import WarehouseList from '../views/WarehouseList.vue'
 import WarehouseSubmit from '../views/WarehouseSubmit.vue'
 import UserInfoList from '../views/UserInfoList.vue'
 import UserInfoSubmit from '../views/UserInfoSubmit.vue'
+import OrderDetails from '../views/OrderDetails.vue'
 
 const routes = [
   { path: "/login", component: Login },
   { path: "/home", component: Home },
   { path: "/order/list", component: OrderList },
+  { path: "/order/details", component: OrderDetails },
   { path: "/order/submit", component: OrderSubmit },
   { path: "/warehouse/list", component: WarehouseList },
   { path: "/warehouse/submit", component: WarehouseSubmit },

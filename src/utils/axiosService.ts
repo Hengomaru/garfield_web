@@ -1,4 +1,5 @@
 import axios from "axios"
+import router from "../router/router"
 
 const axiosService = axios.create({
     baseURL: "http://localhost:8080",
@@ -8,37 +9,28 @@ const axiosService = axios.create({
     }
 })
 
-// axiosService.interceptors.request.use(config => {
-    // const token = localStorage.getItem('token')
-    // if (token) {
-    //     config.headers.Authorization = `Bearer ${token}`
-    // }
-    // if (config.method === 'get') {
-    //     config.params = {
-    //         ...config.params,
-    //         t: Date.now()
-    //     }      
-    // }
-    // if(config.showLoading != false){
-    //     showLoading()
-    // }
-//     return config
-// }, error => {
-//     return Promise.reject(error)
-// })
+axiosService.interceptors.request.use(config => {
+    const token = localStorage.getItem('token')
+    if (token) {
+        config.headers.Authorization = token
+    }
+    return config
+}, error => {
+    return Promise.reject(error)
+})
 
 axiosService.interceptors.response.use(response => {
-    // hideLoading()
-    const res = response.data
-    if(res.code === "200"){
-        return res
+    if (response.status === 200) {
+        return response.data
     } else {
-        // handleBusinessError(res.code, res.message)
-        return Promise.reject(new Error(res.msg || 'Error'))
+        return Promise.reject(new Error(response.data.msg || 'Error'))
     }
 }, error => {
-    // hideLoading()
-    // handleError(error)
+    if (error.response.status === 401 || error.response.status === 403) {
+        console.error('reset login');
+        localStorage.removeItem('token')
+        router.push("/login")
+    }
     return Promise.reject(error)
 })
 

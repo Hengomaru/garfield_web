@@ -23,7 +23,7 @@ axiosService.interceptors.response.use(response => {
     if (response.status === 200) {
         return response.data
     } else {
-        return Promise.reject(new Error(response.data.msg || 'Error'))
+        return Promise.reject(new Error(response.data.code + '' + response.data.msg || 'Error'))
     }
 }, error => {
     if (error.response.status === 401 || error.response.status === 403) {

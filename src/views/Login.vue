@@ -79,23 +79,25 @@ const generateCodeAsync = () => {
 };
 
 const submitForm = (formEl: FormInstance | undefined) => {
-  ruleFormRef.value.validate((valid) => {
-    if (valid) {
+  // ruleFormRef.value.validate((valid) => {
+  //   if (valid) {
       console.log('表单验证成功!');
 
       axiosService.post('/login', {
-        username: ruleForm.AccountNo,
-        password: ruleForm.AccountPwd,
+        // username: ruleForm.AccountNo,
+        // password: ruleForm.AccountPwd,
+        username: 'admin',
+        password: '12345',
       }).then((response) => {
         successCallback(response)
       }).catch((error) => {
         console.error('登录失败:', error);
         localStorage.removeItem('token')
       });
-    } else {
-      console.log('表单验证失败');
-    }
-  });
+  //   } else {
+  //     console.log('表单验证失败');
+  //   }
+  // });
 };
 
 const successCallback = (response: any) => {

@@ -8,6 +8,8 @@ import WarehouseSubmit from '../views/WarehouseSubmit.vue'
 import UserInfoList from '../views/UserInfoList.vue'
 import UserInfoSubmit from '../views/UserInfoSubmit.vue'
 import OrderDetails from '../views/OrderDetails.vue'
+import FileUpload from '../views/Upload.vue'
+import FileDownload from '../views/Download.vue'
 
 const routes = [
   { path: "/login", component: Login },
@@ -19,6 +21,8 @@ const routes = [
   { path: "/warehouse/submit", component: WarehouseSubmit },
   { path: "/user/list", component: UserInfoList },
   { path: "/user/submit", component: UserInfoSubmit },
+  { path: "/file/upload", component: FileUpload },
+  { path: "/file/download", component: FileDownload },
 ]
 
 const router = createRouter({

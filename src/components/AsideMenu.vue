@@ -17,7 +17,6 @@ const source = computed(() => {
 })
 
 function click(item: any) {
-  console.log(item)
   router.push(item.path)
 }
 </script>

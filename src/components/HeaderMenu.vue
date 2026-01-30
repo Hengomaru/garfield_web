@@ -11,6 +11,7 @@ const { setCurrentMenu } = store
         <el-menu-item index="3" @click="setCurrentMenu('order')">Orders</el-menu-item>
         <el-menu-item index="4" @click="setCurrentMenu('user')">User</el-menu-item>
         <el-menu-item index="5" @click="setCurrentMenu('file')">File</el-menu-item>
+        <el-menu-item index="6" @click="setCurrentMenu('data')">Data</el-menu-item>
     </el-menu>
 </template>
 

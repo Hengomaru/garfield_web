@@ -10,6 +10,7 @@ import UserInfoSubmit from '../views/UserInfoSubmit.vue'
 import OrderDetails from '../views/OrderDetails.vue'
 import FileUpload from '../views/Upload.vue'
 import FileDownload from '../views/Download.vue'
+import Charts from '../views/Charts.vue'
 
 const routes = [
   { path: "/login", component: Login },
@@ -23,6 +24,7 @@ const routes = [
   { path: "/user/submit", component: UserInfoSubmit },
   { path: "/file/upload", component: FileUpload },
   { path: "/file/download", component: FileDownload },
+  { path: "/data/display", component: Charts },
 ]
 
 const router = createRouter({

@@ -8,6 +8,7 @@ export const useMenuStore = defineStore('useMenu', () => {
   map.set("order", [{label: "Order List", path: "/order/list"}, {label: "Submit Order", path: "/order/submit"}])
   map.set("warehouse", [{label: "Warehouse List", path: "/warehouse/list"}, {label: "Manage Warehouse", path: "/warehouse/submit"}])
   map.set("file", [{label: "File Upload", path: "/file/upload"}, {label: "File Download", path: "/file/download"}])
+  map.set("data", [{label: "Data Display", path: "/data/display"}])
 
   const currentMenu = ref('home')
 

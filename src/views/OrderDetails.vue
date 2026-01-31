@@ -6,7 +6,7 @@ import { ref, reactive, onMounted, onBeforeMount } from 'vue'
 import type { ComponentSize } from 'element-plus'
 import { Order } from '@/interface/Order'
 import router from '@/router/router'
-import axiosService from '@/utils/axiosService'
+import { axiosService } from '@/utils/axiosService'
 
 const store = useOrderStore()
 const productStore = useProductStore()

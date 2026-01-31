@@ -1,12 +1,17 @@
 import axios from "axios"
 import router from "../router/router"
 
-const axiosService = axios.create({
+export const axiosService = axios.create({
     baseURL: "http://localhost:8080",
     timeout: 10000,
     headers: {
         "Content-Type": "application/json;charset=UTF-8",
     }
+})
+
+export const otherService = axios.create({
+    baseURL: "http://localhost:8080",
+    timeout: 30000
 })
 
 axiosService.interceptors.request.use(config => {
@@ -34,4 +39,3 @@ axiosService.interceptors.response.use(response => {
     return Promise.reject(error)
 })
 
-export default axiosService

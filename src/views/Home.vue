@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useLoginStore } from '@/store/loginStore'
-  import axiosService from '@/utils/axiosService';
+  import { axiosService } from '@/utils/axiosService';
 
   const store = useLoginStore()
   const { username } = store

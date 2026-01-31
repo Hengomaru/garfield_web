@@ -7,7 +7,7 @@ import type {
     TransferKey,
     renderContent,
 } from 'element-plus'
-import axiosService from '@/utils/axiosService'
+import { axiosService } from '@/utils/axiosService'
 import { useProductStore } from '@/store/productStore'
 import { storeToRefs } from 'pinia'
 

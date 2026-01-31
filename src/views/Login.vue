@@ -2,7 +2,7 @@
 import { reactive, onMounted, ref } from 'vue';
 import type { FormInstance, FormRules } from 'element-plus';
 import { User, Lock, Promotion } from '@element-plus/icons-vue';
-import axiosService from '@/utils/axiosService';
+import { axiosService } from '@/utils/axiosService';
 import { useLoginStore } from '@/store/loginStore'
 import numService from '@/utils/numService';
 import router from "@/router/router"

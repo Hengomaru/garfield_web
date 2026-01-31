@@ -1,31 +1,24 @@
 <template>
     <div>
-        <el-button type="primary" @click="download()">download</el-button>
+        <el-input v-model="url" style="width: 240px" placeholder="Please input"></el-input>
+        <el-button type="primary" @click="download">download</el-button>
     </div>
 </template>
 
 <script setup lang="ts">
-import axiosService from '@/utils/axiosService';
-// const download = (data: any, filename = 'data.json') => {
-//     const foo = { hello: "world" };
-//     const blob = new Blob([JSON.stringify(foo)], type: 'application/vnd.ms-excel;charset=utf-8');
-//     const fileName = `${new Date().valueOf()}.xls`;
-//     const link = document.createElement('a');
-//     link.href = window.URL.createObjectURL(blob);
-//     link.download = fileName;
-//     link.click();
-//     window.URL.revokeObjectURL(link.href);
-// }
+import { otherService } from '@/utils/axiosService';
+import { ref } from 'vue';
+
+const url = ref('/download/single')
 
 const download = () => {
-    axiosService.get(`url`, {
-        responseType: 'arraybuffer',
-    }).then(res => {
+    otherService.get(url.value).then(res => {
+        console.log(res)
         if (res.status == 200) {
             const blob = new Blob([res.data], {
-                type: 'application/vnd.ms-excel;charset=utf-8'
+                type: 'text/plain;charset=utf-8'
             });
-            const fileName = `yourfile.xls`;
+            const fileName = `yourfile.txt`;
             const objectUrl = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = objectUrl;
@@ -38,20 +31,5 @@ const download = () => {
             console.error('download error')
         }
     });
-}
-
-const blobDownload = (res: any, type: string, filename: string) => {
-    const blob = new Blob([res], {
-        type: type
-    })
-    const a = document.createElement('a')
-    const URL = window.URL || window.webkitURL
-    const href = URL.createObjectURL(blob)
-    a.href = href
-    a.download = filename
-    document.body.appendChild(a)
-    a.click()
-    document.removeChild(a)
-    window.URL.revokeObjectURL(href)
 }
 </script>

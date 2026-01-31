@@ -5,7 +5,7 @@ import { ref, onMounted } from 'vue'
 import type { ComponentSize, TableInstance } from 'element-plus'
 import { Order } from '@/interface/Order'
 import router from '@/router/router'
-import axiosService from '@/utils/axiosService';
+import { axiosService } from '@/utils/axiosService';
 import { useProductStore } from '@/store/productStore'
 
 const productStore = useProductStore()

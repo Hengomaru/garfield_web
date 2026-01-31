@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import axiosService from '@/utils/axiosService';
+import { otherService } from '@/utils/axiosService';
 import { ref } from 'vue'
 import type { UploadInstance } from 'element-plus'
 
@@ -50,6 +50,6 @@ const upload = (options) => {
     formData.append('id', '12')
     formData.append('name', 'ab;ss;')
     formData.append('size', '1024')
-    return axiosService.post('/upload/single', formData, config).then((response) => {console.log('successful')}).catch((error) => {console.log('failed' + error)})
+    return otherService.post('/upload/single', formData, config).then((response) => {console.log('successful')}).catch((error) => {console.log('failed' + error)})
 }
 </script>
